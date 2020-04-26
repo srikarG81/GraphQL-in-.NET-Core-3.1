@@ -6,6 +6,7 @@ In this example, product store capability exposed to client over http and client
 
 ### Get Started:
 Install following Nuget packages.
+<Enter>
 Install-Package GraphQL -Version 2.4.0
 Install-Package GraphQL.Server.Transports.AspNetCore -V 3.4.0
 Install-Package GraphQL.Server.Ui.Playground  -V 3.4.0
@@ -20,3 +21,40 @@ Define the productstore schema as follows:
         }
     }
 ````
+<Enter>
+ 
+Create Product store query class which defines the queries supported by API.
+``` c#
+ public class ProductStoreQuery :  ObjectGraphType
+    {
+        public ProductStoreQuery(IProductStore productRepository)
+        {
+            // Product query which returns list of products.
+            Field<ListGraphType<ProductType>>(
+               "products",
+               resolve: context => productRepository.GetAllProducts()
+           );
+
+            // Product query which returns a product by Id
+            Field<ProductType>(
+                "product",
+                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "Id", Description = "Product Id" }),
+                 resolve: context =>
+                 { 
+                     var id= context.GetArgument<int>("id");
+                     return productRepository.GetProductById(id);
+                 }
+            );
+
+             // Product query which returns child products for given parent product id
+            Field<ListGraphType<ChildProductType>>(
+             "childProducts",
+             arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "Id" }),
+             resolve: context =>
+             {
+                 var id = context.GetArgument<int>("id");
+                 return productRepository.GetChildren(id);
+             });
+        }
+    }
+```
