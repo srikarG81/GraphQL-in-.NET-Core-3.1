@@ -59,3 +59,8 @@ Create Product store query class which defines the queries supported by API.
     }
 ```
 
+After defining the Product store repository, product types and Graph types, browse playgorup Ulr
+<Enter>
+ http://localhost:5000/ui/playground
+ 
+ ### Happy Coding!
