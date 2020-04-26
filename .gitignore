@@ -3,3 +3,5 @@
 ################################################################################
 
 /.vs/Abc.ProductsStore/v16/Server/sqlite3
+/Abc.ProductsStore/bin/Debug/netcoreapp3.1
+/Abc.ProductsStore/obj
