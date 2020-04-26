@@ -58,3 +58,4 @@ Create Product store query class which defines the queries supported by API.
         }
     }
 ```
+
